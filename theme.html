@@ -1,0 +1,268 @@
+<html>
+	<head>
+		<title>{Title}</title>
+		<link rel="shortcut icon" href="{Favicon}">
+		<link rel="alternate" type="application/rss+xml" href="{RSS}">
+		<meta name="image:cover" content="">
+		<meta name="if:showfollows" content="">
+		<meta name="color:info" content="#303030">
+		<meta name="color:infolight" content="#404040">
+		<meta name="color:regular" content="#303030">
+		<meta name="color:regularlight" content="#404040">
+		<meta name="color:photo" content="#d95e40">
+		<meta name="color:photolight" content="#e96e50">
+		<meta name="color:quote" content="#f2992e">
+		<meta name="color:quotelight" content="#f2A93e">
+		<meta name="color:link" content="#56bc8a">
+		<meta name="color:linklight"  content="#66cc9a">
+		<meta name="color:chat" content="#4aa8d8">
+		<meta name="color:chatlight"  content="#5ab8e8">
+		<meta name="color:audio" content="#a77dc2">
+		<meta name="color:audiolight" content="#b78dd2">
+		<meta name="color:video" content="#748089">
+		<meta name="color:videolight" content="#849099">
+		{block:Description}
+			<meta name="description" content="{MetaDescription}" />
+		{/block:Description}
+		<style>
+			*					{margin:0;}
+			html				{font-family:arial;color:#111;}
+			blockquote          {margin:6px 0 6px 16px;}
+			a                   {text-decoration:none;color:#333;transition:color 0.25s;-webkit-transition:color 0.25s;}
+			a:hover             {color:#ccc;}
+			#container			{position:relative;width:512px;margin:0 auto;}
+			
+			#right              {position:absolute;left:528px;top:256px;width:200px;}
+			#left               {position:absolute;left:-216px;top:256px;width:200px;}
+			
+			#following          {margin-bottom:1em;}
+			.followed           {position:relative;margin:0 5px 12px 5px;width:40px;display:inline-block;height:40px;background:{color:infolight};box-shadow:{color:info} 0 6px 0;}
+			.followed img       {position:absolute;width:40px;height:40px;lefT:0;top:0;}
+			.title-following    {margin-bottom:8px;color:{color:info};font-weight:bold;}
+			
+			#info       		{position:relative;text-align:center;padding:8px;background:{color:infolight};box-shadow:{color:info} 0 6px 0;color:#fff;z-index:5;top:0;width:496px;margin-bottom:60px;}
+			#blogname           {cursor:pointer;}
+			#blogdesc a         {color:#fff !important;cursor:pointer;}
+			#blogdesc a:hover   {color:#ccc !important;}
+			#blogdesc hr        {margin-top:10px;margin-bottom:10px;}
+			
+			#cover              {width:512px;position:relative;height:256px;overflow:hidden;}
+			#cover img          {width:512px;position:absolute;left:0;}
+			
+			.post				{position:relative;padding:6px;margin-top:24px;margin-bottom:60px;}
+			.regular			{background:{color:regularlight};box-shadow:{color:regular} 0 6px 0;}
+			.photo				{background:{color:photolight};box-shadow:{color:photo} 0 6px 0;}
+			.quote				{background:{color:quotelight};box-shadow:{color:quote} 0 6px 0;}
+			.link				{background:{color:linklight};box-shadow:{color:link} 0 6px 0;}
+			.chat				{background:{color:chatlight};box-shadow:{color:chat} 0 6px 0;}
+			.audio				{background:{color:audiolight};box-shadow:{color:audio} 0 6px 0;}
+			.video				{background:{color:videolight};box-shadow:{color:video} 0 6px 0;}
+			.photoset           {background:#fff;}
+			
+			.content-regular	{background:#fff;padding:8px;}
+			.content-photo      {position:relative;width:500px;margin:0 auto;}
+			.content-link       {padding:1em;text-align:center;color:#fff;font-weight:bold;font-size:20pt;}
+			.content-link a     {color:#fff;}
+			
+			.caption            {padding:8px;background:#fff;position:relative;overflow:hidden;}
+			
+			.title  			{position:absolute;left:8px;top:-16px;font-weight:bolder;font-size:18px;}
+			.reblog-butn        {position:absolute;right:8px;top:-16px;font-weight:bolder;font-size:18px;text-align:right;}
+			.title-regular a	{color:{color:regularlight};}
+			.title-photo a		{color:{color:photolight};}
+			.title-quote a		{color:{color:quotelight};}
+			.title-link a		{color:{color:linklight};}
+			.title-chat a		{color:{color:chatlight};}
+			.title-audio a		{color:{color:audiolight};}
+			.title-video a		{color:{color:videolight};}
+			
+			.notes              {list-style:none;}
+			.note               {margin:6px 0;}
+			
+			#pagination         {position:relative;padding:8px 0 2px 0;background:{color:infolight};box-shadow:{color:info} 0 6px 0;margin-top:24px;margin-bottom:16px;}
+			#pagination-butns   {width:100%;color:#fff;font-weight:bold;text-align:center;}
+			#pagination-butns a {color:#fff;}
+			#pagination-butns a:hover {color:#ccc;}
+		</style>
+	</head>
+	<body>
+		<div id="container">
+		    <div id="right" style="display:block;">
+		        {block:Following}
+	                <div id="following">
+	                    <div class="title-following">Following</div>
+	                    {block:Followed}<div class="followed">
+	                        <a href="{FollowedURL}"><img src="{FollowedPortraitURL-40}"></a>
+	                        
+	                    </div>{/block:Followed}
+	                </div>
+	            {/block:Following}
+		    </div>
+		    <div id="left" style="display:block;">
+		        
+		    </div>
+		    <script>
+		        window.addEventListener('resize', function(){renderSidebars();});
+		        window.addEventListener('load', function(){renderSidebars();});
+		        function renderSidebars() {
+		            if(document.body.clientWidth > 944) {
+		                document.getElementById('right').style.display = "block";
+		                document.getElementById('left').style.display = "block";
+		            } else {
+		                document.getElementById('right').style.display = "none";
+		                document.getElementById('left').style.display = "none";
+		            }
+		        }
+		    </script>
+		    <div id="cover">
+		        <!-- Recommended 512x512 -->
+		        <img id="cover_img" style="bottom:0;background:#ddd;" src="{image:cover}">
+        		<script>
+        		    window.addEventListener('scroll', function(){
+        		        if(window.scrollY) {
+        					var scrollY = window.scrollY;
+        				} else {
+        					var scrollY = document.documentElement.scrollTop;
+        				}
+        				var infor = document.getElementById('info');
+        				var posts = document.getElementById('posts');
+        				if(scrollY > 256) {
+        				    infor.style.position = "fixed";
+        				    posts.style.marginTop = infor.getBoundingClientRect().height + 60 + "px";
+        				} else {
+        				    infor.style.position = "relative";
+        				    posts.style.marginTop = "0";
+        				}
+        				var cover = document.getElementById('cover_img');
+        				cover.style.bottom = 0 - (scrollY * 0.4) + "px";
+        		    })
+        		</script>
+		    </div>
+		    <div id="info">
+		        <h1 id="blogname" onclick="window.location='{BlogURL}'">{Title}</h1>
+		        <div id="blogdesc">{Description}</div>
+		    </div>
+			<div id="posts">
+			{block:Posts}
+				{block:Regular}
+					<div class="post regular" id="post_{PostID}">
+						<div class="title title-regular"><a href="{Permalink}">{block:Title}{Title} / {/block:Title}{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-regular"><a href="{ReblogURL}">Reblog</a></div>
+						<div class="content-regular">
+							{Body}
+						</div>
+					</div>
+				{/block:Regular}
+				{block:Photo}
+					<div class="post photo" id="post_{PostID}">
+						<div class="title title-photo"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-photo"><a href="{ReblogURL}">Reblog</a></div>
+						<img class="content-photo" src="{PhotoURL-500}">
+						{block:caption}
+						    <div class="caption">{Caption}</div>
+						{/block:caption}
+					</div>
+				{/block:Photo}
+				{block:Panorama}
+					<div class="post photo" id="post_{PostID}">
+						<div class="title title-photo"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-photo"><a href="{ReblogURL}">Reblog</a></div>
+						<img class="content-photo" src="{PhotoURL-Panorama}">
+						{block:caption}
+						    <div class="caption">{Caption}</div>
+						{/block:caption}
+					</div>
+				{/block:Panorama}
+				{block:Photoset}
+					<div class="post photo" id="post_{PostID}">
+						<div class="title title-photo"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-photo"><a href="{ReblogURL}">Reblog</a></div>
+						<div class="photoset">{Photoset-500}</div>
+						{block:caption}
+						    <div class="caption">{Caption}</div>
+						{/block:caption}
+					</div>
+				{/block:Photoset}
+				{block:Quote}
+					<div class="post quote" id="post_{PostID}">
+						<div class="title title-quote"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-quote"><a href="{ReblogURL}">Reblog</a></div>
+						<div class="content-link">{Quote}</div>
+						{block:Source}
+						    <div class="caption">{Source}</div>
+						{/block:Source}
+					</div>
+				{/block:Quote}
+				{block:Link}
+					<div class="post link" id="post_{PostID}">
+						<div class="title title-link"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-link"><a href="{ReblogURL}">Reblog</a></div>
+						<div class="content-link"><a href="{URL}">{Name}</a></div>
+						{block:Description}
+						    <div class="caption">{Description}</div>
+						{/block:Description}
+					</div>
+				{/block:Link}
+				{block:Chat}
+					<div class="post chat" id="post_{PostID}">
+						<div class="title title-chat"><a href="{Permalink}">{block:Title}{Title} / {/block:Title}{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-chat"><a href="{ReblogURL}">Reblog</a></div>
+						<div class="content-regular">
+							{block:Lines}
+								<p>{block:Label}<b>{Label}</b>&nbsp;{/block:Label}{Line}</p>
+							{/block:Lines}
+						</div>
+					</div>
+				{/block:Chat}
+				{block:Audio}
+					<div class="post audio" id="post_{PostID}">
+						<div class="title title-audio"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-audio"><a href="{ReblogURL}">Reblog</a></div>
+						{block:AudioEmbed}{AudioEmbed-500}{/block:AudioEmbed}
+						{block:AudioPlayer}{AudioPlayer}{/block:AudioPlayer}
+						{block:caption}
+						    <div class="caption">{Caption}</div>
+						{/block:caption}
+					</div>
+				{/block:Audio}
+				{block:Video}
+					<div class="post video" id="post_{PostID}">
+						<div class="title title-video"><a href="{Permalink}">{NoteCount} Notes</a></div>
+						<div class="reblog-butn title-video"><a href="{ReblogURL}">Reblog</a></div>
+						{Video-500}
+						{block:caption}
+						    <div class="caption">{Caption}</div>
+						{/block:caption}
+					</div>
+				{/block:Video}
+				{block:PermalinkPage}
+				    <div class="post">
+				        {PostNotes}
+				    </div>
+				{/block:PermalinkPage}
+			{/block:Posts}
+			{block:Pagination}
+			    <div id="pagination">
+			        <table id="pagination-butns">
+			            <tr>
+			                <td style="width:33%;">
+            			        {block:PreviousPage}
+            			            <a href="{PreviousPage}">Previous Page</a>
+            			        {/block:PreviousPage}
+        			        </td>
+        			        <td style="width:33%;">
+        			            Page {CurrentPage} / {TotalPages}
+        			        </td>
+        			        <td style="width:33%;">
+            			        {block:NextPage}
+            			            <a href="{NextPage}">Next Page</a>
+            			        {/block:NextPage}
+        			        </td>
+    			        </tr>
+			        </table>
+			    </div>
+			{/block:Pagination}
+			</div>
+		</div>
+	</body>
+</html>
